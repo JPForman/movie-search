@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Search from './Search';
 import "../css/App.css";
 import axios from 'axios';
+import Results from './Results';
 
 
 function App(API_KEY) {
@@ -14,10 +15,14 @@ function App(API_KEY) {
   const apiurl = `http://www.omdbapi.com/?i=tt3896198&apikey=${process.env.REACT_APP_API_KEY}`;
 
   const search = (e) => {
-    if (e.key === 'Enter') {
-      axios(apiurl + '&s=' + state.searchQuery).then((data) => {
-        console.log(data);
-      } );
+    if (e.key === "Enter") {
+      axios(apiurl + "&s=" + state.searchQuery).then(({ data }) => {
+        let results = data.Search;
+
+        setState(prevState => {
+          return { ...prevState, results: results }
+        })
+      });
     }
   }
 
@@ -25,6 +30,7 @@ function App(API_KEY) {
     let searchQuery = e.target.value;
     setState(prevState => {
       return { ...prevState, searchQuery: searchQuery }
+      
     });
   }
   
@@ -35,6 +41,7 @@ function App(API_KEY) {
       </header>
       <main>
         <Search handleInput={handleInput} search={search} />
+        <Results results={state.results} />
       </main>
     </div>
   );
