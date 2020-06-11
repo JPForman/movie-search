@@ -3,6 +3,7 @@ import Search from './Search';
 import "../css/App.css";
 import axios from 'axios';
 import Results from './Results';
+import Popup from './Popup';
 
 
 function App(API_KEY) {
@@ -12,7 +13,7 @@ function App(API_KEY) {
     selected: {}
   });
 
-  const apiurl = `http://www.omdbapi.com/?i=tt3896198&apikey=${process.env.REACT_APP_API_KEY}`;
+  const apiurl = `http://www.omdbapi.com/?&apikey=${process.env.REACT_APP_API_KEY}`;
 
   const search = (e) => {
     if (e.key === "Enter") {
@@ -34,9 +35,11 @@ function App(API_KEY) {
     });
   }
 
-  const openPopup = id => {
-    axios(apiurl + '&i=' + id).then(({ data }) => {
+  const openPopup = (id) => {
+    axios(apiurl + "&i=" + id).then(({ data }) => {
       let result = data;
+
+      console.log(id);
 
       setState(prevState => {
         return { ...prevState, selected: result }
@@ -57,7 +60,9 @@ function App(API_KEY) {
       </header>
       <main>
         <Search handleInput={handleInput} search={search} />
-        <Results results={state.results} />
+        <Results results={state.results} openPopup={openPopup} />
+        
+        {(typeof state.selected.Title != "undefined") ? <Popup selected={state.selected} closePopup={closePopup} /> : false}
       </main>
     </div>
   );
