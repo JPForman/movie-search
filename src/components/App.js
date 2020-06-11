@@ -56,7 +56,7 @@ function App(API_KEY) {
   return (
     <div className='app'>
       <header>
-        <h1>hello world</h1>
+        <h1>The Amazing Movie Database</h1>
       </header>
       <main>
         <Search handleInput={handleInput} search={search} />
