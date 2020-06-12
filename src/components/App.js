@@ -60,7 +60,12 @@ function App(API_KEY) {
       </header>
       <main>
         <Search handleInput={handleInput} search={search} />
-        <Results results={state.results} openPopup={openPopup} />
+
+        {state.results ? 
+          <Results results={state.results} openPopup={openPopup} />
+          :
+          <h3 id='noResults'>Sorry, no results for that query</h3>
+        }
         
         {(typeof state.selected.Title != "undefined") ? <Popup selected={state.selected} closePopup={closePopup} /> : false}
       </main>

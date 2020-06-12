@@ -27,6 +27,11 @@ main {
   margin: 0 auto;
 }
 
+#noResults {
+  color: #EEE;
+  padding-bottom: 10px;
+}
+
 section {
   padding: 15px;
 }
